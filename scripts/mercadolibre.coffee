@@ -11,7 +11,6 @@ module.exports = (robot) ->
     robot.logger.error JSON.stringify(err)
 
   robot.respond /(cuanto cuesta|cuanto vale)( un| el| la)? (.*)/i, (msg) ->
-
     calculateAverage = (rawResponse) ->
       data = JSON.parse(rawResponse)
       prices = data.results.map (r) -> r.price
@@ -26,11 +25,13 @@ module.exports = (robot) ->
           b
 
     query = msg.match[3]
+    robot.logger.debug "Buscando #{query}"
     msg.http("https://api.mercadolibre.com")
       .header('accept', 'application/json')
       .path('sites/MLA/search')
       .query(q: query)
       .get() (err, res, body) ->
+        robot.logger.debug "Respuesta obtenida"
         if err
           msg.send "Encountered an error :( #{err}"
           return
