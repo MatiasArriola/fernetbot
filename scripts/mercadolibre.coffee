@@ -51,4 +51,7 @@ module.exports = (robot) ->
           resp.addListener('error', (chunk) ->
             robot.logger.error(chunk.toString())
           )
+        )
+        req.addListener('error', (error) ->
+          robot.logger.error(error)
         ))()
