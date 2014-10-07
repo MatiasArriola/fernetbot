@@ -21,7 +21,7 @@ module.exports = (robot) ->
           b
 
     query = msg.match[3]
-    robot.http("https://api.mercadolibre.com")
+    msg.http("https://api.mercadolibre.com")
       .header('accept', 'application/json')
       .path('sites/MLA/search')
       .query(q: query)
