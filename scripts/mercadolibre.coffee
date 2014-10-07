@@ -31,23 +31,14 @@ module.exports = (robot) ->
       .header('accept', 'application/json')
       .path('sites/MLA/search')
       .query(q: query)
-      # .get() (err, res, body) ->
-      #   robot.logger.debug "Respuesta obtenida"
-      #   if err
-      #     msg.send "Encountered an error :( #{err}"
-      #     return
-      #   avg = Math.round calculateAverage(body)
-      #   popularLink = getPopularPost(body).permalink
-      #   msg.send  """
-      #             El valor de _#{query}_ en promedio es de *$#{avg}*.
-      #             La publicación más popular es #{popularLink}.
-      #             """
-      .get((err, req) ->
-        req.addListener('response', (resp) ->
-          resp.addListener('data', (chunk) ->
-            robot.logger.debug(chunk.toString())
-          )
-          resp.addListener('error', (chunk) ->
-            robot.logger.error(chunk.toString())
-          )
-        ))()
+      .get() (err, res, body) ->
+        robot.logger.debug "Respuesta obtenida"
+        if err
+          msg.send "Encountered an error :( #{err}"
+          return
+        avg = Math.round calculateAverage(body)
+        popularLink = getPopularPost(body).permalink
+        msg.send  """
+                  El valor de _#{query}_ en promedio es de *$#{avg}*.
+                  La publicación más popular es #{popularLink}.
+                  """
