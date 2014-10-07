@@ -1,1 +1,1 @@
-web: bin/hubot --adapter slack
+web: HUBOT_LOG_LEVEL="debug" bin/hubot --adapter slack
