@@ -9,7 +9,6 @@ module.exports = (robot) ->
   robot.error (err, msg) ->
     #robot.messageRoom '#fernetbot-playground', 'ERROR:' + JSON.stringify(err)
     robot.logger.error JSON.stringify(err)
-    robot.logger.error JSON.stringify(msg)
 
   robot.respond /(cuanto cuesta|cuanto vale)( un| el| la)? (.*)/i, (msg) ->
     calculateAverage = (rawResponse) ->
