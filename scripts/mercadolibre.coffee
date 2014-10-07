@@ -7,9 +7,8 @@
 module.exports = (robot) ->
 
   robot.error (err, msg) ->
-    robot.messageRoom '#fernetbot-playground', 'ERROR:' + JSON.stringify(err)
-    if msg?
-      msg.reply "DOES NOT COMPUTE"
+    #robot.messageRoom '#fernetbot-playground', 'ERROR:' + JSON.stringify(err)
+    robot.logger.error JSON.stringify(err)
 
   robot.respond /(cuanto cuesta|cuanto vale)( un| el| la)? (.*)/i, (msg) ->
 
