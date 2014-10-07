@@ -13,5 +13,5 @@ module.exports = (robot) ->
       if(x == length)
         ":nyancat:"
       else
-         ":nyan"
+         ":nyan:"
     msg.send nyanarray.join('')
