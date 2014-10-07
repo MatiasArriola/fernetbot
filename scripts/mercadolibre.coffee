@@ -29,7 +29,6 @@ module.exports = (robot) ->
     robot.logger.debug "Buscando #{query}"
     msg.http("https://api.mercadolibre.com")
       .header('accept', 'application/json')
-      .header('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36')
       .path('sites/MLA/search')
       .query(q: query)
       # .get() (err, res, body) ->
