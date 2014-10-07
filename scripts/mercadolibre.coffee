@@ -5,6 +5,12 @@
 #   hubot cuanto cuesta <query> - searches meli and return avg price
 
 module.exports = (robot) ->
+
+  robot.error (err, msg) ->
+    robot.messageRoom '#fernetbot-playground', 'ERROR:' + JSON.stringify(err)
+    if msg?
+      msg.reply "DOES NOT COMPUTE"
+
   robot.respond /(cuanto cuesta|cuanto vale)( un| el| la)? (.*)/i, (msg) ->
 
     calculateAverage = (rawResponse) ->
