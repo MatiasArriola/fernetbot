@@ -5,6 +5,14 @@
 #   hubot cuanto cuesta <query> - searches meli and return avg price
 
 module.exports = (robot) ->
+  robot.router.get '/hubot/httpexample', (req, res) ->
+    robot.http("https://api.mercadolibre.com/sites/MLA/search?q=ipod nano&limit=5")
+      .get() (err, mlres, body) ->
+        if err
+          res.send 500, "Encountered an error :( #{err}"
+          return
+        res.send body
+
   robot.respond /(cuanto cuesta|cuanto vale)( un| el| la)? (.*)/i, (msg) ->
 
     calculateAverage = (rawResponse) ->
