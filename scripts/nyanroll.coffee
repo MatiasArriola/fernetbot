@@ -7,7 +7,7 @@
 module.exports = (robot) ->
   robot.respond /NYANROLL$/i, (msg) ->
     min = 0
-    max = 12
+    max = 24
     length = Math.floor(Math.random() * (max / 2)) * 2
     nyanarray = [0..length].map (x) -> 
       if(x == length)
