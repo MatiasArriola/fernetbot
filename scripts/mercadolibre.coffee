@@ -6,25 +6,17 @@
 
 https = require('https');
 https.globalAgent.options.secureProtocol = 'SSLv3_method';
+request = require('request')
 
 module.exports = (robot) ->
-  robot.router.get '/hubot/httpexample', (req, res) ->
-    robot.http("https://api.mercadolibre.com/sites/MLA/search?q=ipod nano&limit=5")
-      .get() (err, mlres, body) ->
-        if err
-          res.send 500, "Encountered an error :( #{err}"
-          return
-        res.send body
 
   robot.respond /(cuanto cuesta|cuanto vale)( un| el| la)? (.*)/i, (msg) ->
 
-    calculateAverage = (rawResponse) ->
-      data = JSON.parse(rawResponse)
+    calculateAverage = (data) ->
       prices = data.results.map (r) -> r.price
       (prices.reduce (a,b) -> a + b) / prices.length
 
-    getPopularPost = (rawResponse) ->
-      data = JSON.parse(rawResponse)
+    getPopularPost = (data) ->
       data.results.reduce (a,b) ->
         if a.sold_quantity > b.sold_quantity
           a
@@ -32,17 +24,23 @@ module.exports = (robot) ->
           b
 
     query = msg.match[3]
-    robot.http("https://api.mercadolibre.com")
-      .header('accept', 'application/json')
-      .path('sites/MLA/search')
-      .query(q: query)
-      .get() (err, res, body) ->
-        if err
-          msg.send "Encountered an error :( #{err}"
-          return
-        avg = Math.round calculateAverage(body)
-        popularLink = getPopularPost(body).permalink
-        msg.send  """
-                  El valor de _#{query}_ en promedio es de *$#{avg}*.
-                  La publicación más popular es #{popularLink}.
-                  """
+
+    requestOptions =
+      method: 'GET'
+      url: "https://api.mercadolibre.com/sites/MLA/search"
+      qs:
+        q: query
+      headers: 
+        userAgent: 'fernetbot 0.1'
+      json: true
+
+    request requestOptions, (err, res, body) ->
+      if err
+        msg.send "Encountered an error :( #{err}"
+        return
+      avg = Math.round calculateAverage(body)
+      popularLink = getPopularPost(body).permalink
+      msg.send  """
+                El valor de _#{query}_ en promedio es de *$#{avg}*.
+                La publicación más popular es #{popularLink}.
+                """
