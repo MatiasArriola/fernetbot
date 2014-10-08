@@ -42,5 +42,5 @@ module.exports = (robot) ->
       popularLink = getPopularPost(body).permalink
       msg.send  """
                 El valor de _#{query}_ en promedio es de *$#{avg}*.
-                La publicación más popular es #{popularLink}.
+                La publicación más popular es #{popularLink}
                 """
