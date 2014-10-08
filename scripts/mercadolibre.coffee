@@ -4,6 +4,9 @@
 # Commands:
 #   hubot cuanto cuesta <query> - searches meli and return avg price
 
+https = require('https');
+https.globalAgent.options.secureProtocol = 'SSLv3_method';
+
 module.exports = (robot) ->
   robot.router.get '/hubot/httpexample', (req, res) ->
     robot.http("https://api.mercadolibre.com/sites/MLA/search?q=ipod nano&limit=5")
