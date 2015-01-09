@@ -24,7 +24,8 @@
     "hubot": "~2.8.2",
     "hubot-scripts": "~2.5.16",
     "hubot-slack": "~2.0.4",
-    "request": "~2.45.0"
+    "request": "~2.45.0",
+    "weighted": "~0.2.2"
   },
   "engines": {
     "node": ">= 0.8.x",
