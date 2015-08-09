@@ -26,7 +26,8 @@
     "hubot-slack": "~3.3.0",
     "request": "~2.60.0",
     "weighted": "~0.3.0",
-    "hubot-markov": "~1.4.0"
+    "hubot-markov": "~1.4.0",
+    "hubot-youtube": "~1.0.1"
   },
   "engines": {
     "node": ">= 0.8.x",
