@@ -3,9 +3,6 @@
 #   (results may be off, depending on search terms and product)
 # Commands:
 #   hubot cuanto cuesta <query> - searches meli and return avg price
-
-https = require('https');
-https.globalAgent.options.secureProtocol = 'SSLv3_method';
 request = require('request')
 
 module.exports = (robot) ->
@@ -30,7 +27,7 @@ module.exports = (robot) ->
       url: "https://api.mercadolibre.com/sites/MLA/search"
       qs:
         q: query
-      headers: 
+      headers:
         userAgent: 'fernetbot 0.1'
       json: true
 
