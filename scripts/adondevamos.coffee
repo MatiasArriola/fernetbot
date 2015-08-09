@@ -19,6 +19,9 @@ places =
   ninguno: 0.1
 
 isSameDate = (a, b) ->
+  a = new Date(a)
+  b = new Date(b)
+  
   a.getDate() is b.getDate() and
   a.getMonth() is b.getMonth() and
   a.getFullYear() is b.getFullYear()
