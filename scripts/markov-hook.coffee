@@ -1,5 +1,5 @@
 # Description:
-#   Send messages if a pattern is found in the conversation, such as salutations or ppl laughings
+#   handles the 'markov'(room, seed) event
 #
 # Dependencies:
 #   "hubot-markov": ""
@@ -37,10 +37,6 @@ module.exports = (robot) ->
 
   model = new MarkovModel(storage, ply, min)
 
-  robot.respond /testloco$/i, (msg) ->
-    robot.logger.info "matitest msg.message.room: #{msg.message.room}"
-    robot.messageRoom "random", "testloco OK"
-
   robot.on 'markov', (room, seed) ->
     model.generate seed or '', max, (text) =>
-      robot.messageRoom room or process.env.HUBOT_MARKOV_HOOK_ROOM, text
+      robot.messageRoom room or "random", text
