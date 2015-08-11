@@ -38,5 +38,5 @@ module.exports = (robot) ->
   model = new MarkovModel(storage, ply, min)
 
   robot.on 'markov', (room, seed) ->
-    model.generate seed or '', max, (text) =>
-      robot.messageRoom room or "random", text
+    model.generate '', max, (text) =>
+      robot.messageRoom "random", text
