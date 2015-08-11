@@ -39,6 +39,7 @@ module.exports = (robot) ->
 
   robot.respond /testloco$/i, (msg) ->
     robot.logger.info "matitest msg.message.room: #{msg.message.room}"
+    robot.messageRoom "random", "testloco OK"
 
   robot.on 'markov', (room, seed) ->
     model.generate seed or '', max, (text) =>
