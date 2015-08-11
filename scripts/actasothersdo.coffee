@@ -14,7 +14,7 @@
 configs = [
   name: "laugh"
   hear: [/^jaja/i]
-  respond: ["jajaj", "jajajja", "jajaja", "jojoy", 'ajajj q hdp', 'JAJAJA', 'JA!', ["jajaja", ":joy:"]]
+  respond: ["jajaj", "jajajja", "jajaja", "jaja", "kakakja", "jojoy", 'ajajj q hdp', 'JAJAJA', 'JAJ!', ["jajaja", ":joy:"]]
   chances: .7
   expiration: 2 * 60 * 1000
 ,
@@ -29,10 +29,27 @@ configs = [
   respond: ["nos vemos!", "nos vemooo", "goodbye", "chau chau", "adios", "abrazo", "abrazoooo", ["abrazo", "nos vemos"], "byes" ]
   chances: 1
   expiration: 15 * 60 * 1000
+,
+  # name: "mentioned"
+  # hear: [ /\bfernetbot\b/,  /\bbot\b/i, /\bhubot\b/i] /^(?!.*\?$).*\bbot\b.*/ig
+  # event: "markov"
+  # chances: .7
+  # expiration: 1 * 60 * 1000
+  name: "askedMe"
+  hear: [ /\bfernetbot\b.*\?$/i,  /\bbot\b.*\?$/i, /\bhubot\b.*\?$/i]
+  event: "markov"
+  chances: 1
+  expiration: 1 * 1000
+,
+  name: "askedGeneral"
+  hear: [/.*\?$/i]
+  event: "markov"
+  chances: 0.1
+  expiration: 1 * 1000
 ]
 
 class Attitude
-  @maxDelay: 15 * 1000
+  @maxDelay: 7 * 1000
 
   constructor: (config, @robot) ->
     for key, value of config
@@ -43,9 +60,11 @@ class Attitude
     @robot.hear(hearing, (res) => @handler res) for hearing in @hear
 
   handler: (res) ->
+    #return if res.message?.room? isnt "random" TODO:TEST
     if Math.random() <= @chances and @shouldAct()
       @updateLastSent()
-      @sendDelayedMessage(res, res.random(@respond))
+      @sendDelayedMessage(res, res.random(@respond)) if @respond?
+      @robot.emit @event if @event?
 
   sendDelayedMessage: (res, message, delay = Math.random() * @constructor.maxDelay) ->
     if typeof(message) is "string"
