@@ -15,19 +15,19 @@ configs = [
   name: "laugh"
   hear: [/^jaja/i]
   respond: ["jajaj", "jajajja", "jajaja", "jaja", "kakakja", "jojoy", 'ajajj q hdp', 'JAJAJA', 'JAJ!', ["jajaja", ":joy:"]]
-  chances: .7
+  chances: .1
   expiration: 2 * 60 * 1000
 ,
   name: "hello"
   hear: [/^buenas[s\s]*$/i, /^buen(os)? d[ií]a(s)?$/i]
   respond: ["buenas", "hola, que tal?", ["buenas", "como va?"], ["holaa", "todo bien?"]]
-  chances: 1
+  chances: .5
   expiration: 15 * 60 * 1000
 ,
   name: "bye"
   hear: [/^bueno(.)+me(\s)+voy/i, /^(bueno)?[\s,]*nos vemo(.)*/i, /^bye/i, /^cya$/i, /^abrazo[\s\S]{0,4}$/i]
   respond: ["nos vemos!", "nos vemooo", "goodbye", "chau chau", "adios", "abrazo", "abrazoooo", ["abrazo", "nos vemos"], "byes" ]
-  chances: 1
+  chances: .5
   expiration: 15 * 60 * 1000
 ,
   # name: "mentioned"
@@ -44,7 +44,7 @@ configs = [
   name: "askedGeneral"
   hear: [/.*\?$/i]
   event: "markov"
-  chances: 0.1
+  chances: 0.05
   expiration: 1 * 1000
 ]
 
