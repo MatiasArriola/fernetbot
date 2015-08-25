@@ -6,7 +6,10 @@
 #   "cheerio": ""
 #
 # Commands:
-#   hubot ludum
+#   hubot ludum - return new comments on the entry
+#   hubot ludum all - return all the comments for the entry
+#   hubot ludum reset - forgets about the read comments
+#
 request = require('request')
 cheerio = require('cheerio')
 
@@ -20,7 +23,7 @@ module.exports = (robot) ->
       method: 'GET'
       url: LUDUM_URL
       headers:
-        userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36'
+        userAgent: robot.name
 
     request requestOptions, (err, res, body) ->
       if err
