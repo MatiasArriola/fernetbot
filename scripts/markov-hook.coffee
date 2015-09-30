@@ -16,7 +16,7 @@ Redis = require '../node_modules/hubot-markov/node_modules/redis'
 MarkovModel = require '../node_modules/hubot-markov/src/model'
 RedisStorage = require '../node_modules/hubot-markov/src/redis-storage'
 
-module.exports = (robot) ->
+MarkovHook = (robot) ->
   # Configure redis the same way that redis-brain does.
   info = Url.parse process.env.REDISTOGO_URL or
     process.env.REDISCLOUD_URL or
@@ -37,6 +37,13 @@ module.exports = (robot) ->
 
   model = new MarkovModel(storage, ply, min)
 
+  MarkovHook.model = model
+
   robot.on 'markov', (room, seed) ->
     model.generate '', max, (text) =>
       robot.messageRoom "random", text
+
+MarkovHook.generate = (seed, callback) =>
+  MarkovHook.model.generate seed, process.env.HUBOT_MARKOV_GENERATE_MAX or 50, callback
+
+module.exports = MarkovHook
