@@ -14,7 +14,7 @@ request = require('request')
 cheerio = require('cheerio')
 
 ROOM_TO_MESSAGE = 'ludum'
-LUDUM_URL = 'http://ludumdare.com/compo/ludum-dare-35/?action=preview&uid=31386' 
+LUDUM_URL = 'https://ldjam.com/events/ludum-dare/39/squanchy-squids' 
 
 module.exports = (robot) ->
 
