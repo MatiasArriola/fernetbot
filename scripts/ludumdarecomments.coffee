@@ -14,29 +14,25 @@ request = require('request')
 cheerio = require('cheerio')
 
 ROOM_TO_MESSAGE = 'ludum'
-LUDUM_URL = 'http://ludumdare.com/compo/ludum-dare-35/?action=preview&uid=31386' 
+LUDUM_URL = 'https://api.ldjam.com/vx/note/get/35653' 
 
 module.exports = (robot) ->
 
   robot.on 'ludum', (diff) ->
-    requestOptions =
-      method: 'GET'
-      url: LUDUM_URL
-      headers:
-        userAgent: robot.name
-
-    request requestOptions, (err, res, body) ->
+    robot.http(LUDUM_URL)
+    .header('Accept', 'application/json')
+    .get() (err, res, body) ->
       if err
         msg.send "Encountered an error :( #{err}"
         return
-      $ = cheerio.load body
+      
       seenCount = if diff then (parseInt(robot.brain.get('ludum'),10) or 0) else 0
-      comments = $('div.comment p')
-      if comments.length is seenCount
+      data = JSON.parse body
+      if data.note.length is seenCount
         robot.messageRoom ROOM_TO_MESSAGE, '_nada nuevo_'
         return
-      comments.each (i) ->
-        robot.messageRoom ROOM_TO_MESSAGE, $(this).text() + ':end:\n' if i >= seenCount
+      data.note.each (i) ->
+        robot.messageRoom ROOM_TO_MESSAGE, this.body + ':end:\n' if i >= seenCount
       robot.brain.set('ludum', comments.length)
 
   robot.respond /ludum$/i, (msg) ->
